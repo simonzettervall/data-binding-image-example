@@ -11,6 +11,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Handler mHandler;
+    private Runnable mRunnable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,19 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         setupRecyclerView(models);
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                String randomUrl = urls[((int) (Math.random() * urls.length))];
-                DefaultModel randomModel = models.get((int) (Math.random() * models.size()));
-
-                randomModel.setTitle(randomModel.getTitle() + ".");
-                randomModel.setUrl(randomUrl);
-
-                handler.postDelayed(this, 1000);
-            }
-        }, 1000);
+        setupRandomizer(models, urls);
     }
 
     private List<DefaultModel> createModels() {
@@ -53,5 +44,35 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         recyclerView.setAdapter(adapter);
+    }
+
+    private void setupRandomizer(List<DefaultModel> models, String[] urls) {
+        mHandler = new Handler();
+        mRunnable = new Runnable() {
+            @Override
+            public void run() {
+                String randomUrl = urls[((int) (Math.random() * urls.length))];
+                DefaultModel randomModel = models.get((int) (Math.random() * models.size()));
+
+                randomModel.setTitle(randomModel.getTitle() + ".");
+                randomModel.setUrl(randomUrl);
+
+                mHandler.postDelayed(this, 1000);
+            }
+        };
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mHandler.postDelayed(mRunnable, 1000);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        mHandler.removeCallbacks(mRunnable);
     }
 }
