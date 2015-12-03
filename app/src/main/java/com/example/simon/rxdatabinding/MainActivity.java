@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         List<DefaultModel> models = createModels();
-        String[] urls = new String[]{"https://pbs.twimg.com/profile_images/604644048/sign051.gif", "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Wiktionary_small.svg/350px-Wiktionary_small.svg.png", "http://www.hercampus.com/sites/default/files/2013/02/27/topic-1350661050.jpg"};
+        String[] urls = new String[]{"https://regmedia.co.uk/2015/08/18/android_6_marshmallow_logo.jpg", "http://images.techhive.com/images/article/2015/05/android-lollipop-nexus-9-1-100583974-primary.idge.png", "http://www.technobaboy.com/wp-content/uploads/Android-KitKat-Logo.jpg"};
 
         setupRecyclerView(models);
 
